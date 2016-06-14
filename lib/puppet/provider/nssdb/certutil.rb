@@ -14,7 +14,6 @@ Puppet::Type.type(:nssdb).provide(:certutil) do
       certutil(['-L', '-d', @resource[:path]])
       return true
     rescue Puppet::ExecutionFailure => e
-      Puppet.debug("#get_proxy_bypass_domains had an error -> #{e.inspect}")
       return false
     end
   end
