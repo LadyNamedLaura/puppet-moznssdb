@@ -69,18 +69,16 @@ Puppet::Type.type(:nssdb_cert).provide(:certutil) do
           content:    certutil(["-L", "-d", dbpath, "-n", name, "-a"]).strip.gsub(/[\n\r]+/, "\n"),
         }
         unless res[:path].nil?
+          hash[:path] = ""
           begin
             newdata = File.read(res[:path]).strip.gsub(/[\n\r]+/, "\n")
             if hash[:content].to_s.eql?(newdata.to_s)
               hash[:path] = res[:path]
-            else
-              hash[:path] = ""
             end
           rescue
-            hash[:path] = ""
           end
         end
-        dbresources[name].provider = new(hash)
+        res.provider = new(hash)
       end
     end
   end
