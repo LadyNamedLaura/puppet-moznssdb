@@ -38,7 +38,7 @@ Puppet::Type.newtype(:nssdb_cert) do
       Puppet::Type::Nssdb_cert.mungetrust(value)
     end
     def insync?(is)
-      is.sort == should.sort
+      is.sort == should.sort || is.sort.reject { |c| c == 'u'} == should.sort
     end
     defaultto Array.new
   end
@@ -48,7 +48,7 @@ Puppet::Type.newtype(:nssdb_cert) do
       Puppet::Type::Nssdb_cert.mungetrust(value)
     end
     def insync?(is)
-      is.sort == should.sort
+      is.sort == should.sort || is.sort.reject { |c| c == 'u'} == should.sort
     end
     defaultto Array.new
   end
@@ -58,7 +58,7 @@ Puppet::Type.newtype(:nssdb_cert) do
       Puppet::Type::Nssdb_cert.mungetrust(value)
     end
     def insync?(is)
-      is.sort == should.sort
+      is.sort == should.sort || is.sort.reject { |c| c == 'u'} == should.sort
     end
     defaultto Array.new
   end
