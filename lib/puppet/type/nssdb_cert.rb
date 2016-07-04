@@ -83,6 +83,6 @@ Puppet::Type.newtype(:nssdb_cert) do
   end
 
   autorequire(:nssdb) do
-    @parameters[:dbpath]
+    [@parameters[:dbpath]]
   end
 end
