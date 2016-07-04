@@ -3,7 +3,7 @@ Puppet::Type.newtype(:nssdb) do
 
   newparam(:path, :namevar => true) do
   end
-#  newproperty(:password) do
-#    defaultto ""
-#  end
+  autorequire(:file) do
+    @parameters[:path]
+  end
 end

@@ -81,4 +81,8 @@ Puppet::Type.newtype(:nssdb_cert) do
 
     provider.validate if provider.respond_to?(:validate)
   end
+
+  autorequire(:nssdb) do
+    @parameters[:dbpath]
+  end
 end
