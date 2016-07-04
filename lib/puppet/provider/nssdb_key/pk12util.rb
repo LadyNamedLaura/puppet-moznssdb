@@ -21,12 +21,13 @@ Puppet::Type.type(:nssdb_key).provide(:pk12util) do
   end
 
   def do_create
-    pk12 = genpk12()
+    pass = SecureRandom.hex
+    pk12 = genpk12(pass)
 
     Tempfile.open("mosdb_key_#{@resource[:name]}") do |tmpfile|
       tmpfile.write(pk12.to_der)
       tmpfile.flush
-      pk12util(["-i", tmpfile.path.to_s, "-d", @resource[:dbpath], "-W", ""])
+      pk12util(["-i", tmpfile.path.to_s, "-d", @resource[:dbpath], "-W", pass])
       len = tmpfile.pos
       tmpfile.pos = 0
       tmpfile.write("0"*len)
@@ -73,9 +74,10 @@ Puppet::Type.type(:nssdb_key).provide(:pk12util) do
 
         pk12 = nil
         Tempfile.open("mosdb_key_#{name}") do |tmpfile|
-          pk12util(["-d", dbpath, "-W", "", "-n", name, "-o", tmpfile.path.to_s])
+          pass = SecureRandom.hex
+          pk12util(["-d", dbpath, "-W", pass, "-n", name, "-o", tmpfile.path.to_s])
           pk12data = tmpfile.read
-          pk12     = OpenSSL::PKCS12::new(pk12data)
+          pk12     = OpenSSL::PKCS12::new(pk12data,pass)
         end
         hash = {
           ensure: :present,
