@@ -29,6 +29,6 @@ Puppet::Type.newtype(:nssdb_key) do
     provider.validate if provider.respond_to?(:validate)
   end
   autorequire(:nssdb_cert) do
-    [@parameters[:name]]
+    [@parameters[:name].value]
   end
 end

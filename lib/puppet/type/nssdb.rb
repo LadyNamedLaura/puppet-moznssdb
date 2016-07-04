@@ -4,6 +4,6 @@ Puppet::Type.newtype(:nssdb) do
   newparam(:path, :namevar => true) do
   end
   autorequire(:file) do
-    [@parameters[:path]]
+    [@parameters[:path].value]
   end
 end
